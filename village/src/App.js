@@ -40,7 +40,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-       <Route path="/new-smurf" 
+       <Route path="/smurf-form" 
         render={props => 
         <SmurfForm {...props} 
         addSmurf={this.addSmurf}/>} />
