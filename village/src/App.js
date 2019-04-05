@@ -5,6 +5,7 @@ import { Route, NavLink } from "react-router-dom";
 import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
+import DeleteSmurf from './DeleteSmurf';
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +37,20 @@ class App extends Component {
         console.log(err);
       })
     }
+
+    updateSmurf = updatedSmurf => {
+      axios
+        .put(`http://localhost:3333/smurfs/${updatedSmurf.id}`, updatedSmurf)
+        .then(res => {
+          this.setState({ smurfs: res.data });
+          console.log(res);
+          // redirect
+          this.props.history.push("/smurfs");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
   
   render() {
     return (
@@ -48,14 +63,19 @@ class App extends Component {
             <NavLink to="/smurf-form">ADD SMURF</NavLink>
           </div>
         </nav>
-
-       <Route path="/smurf-form" 
+        <img
+        className="/"
+        src="http://www.dlandroid.com/wp-content/uploads/Smurfs%E2%80%99-Village-Apk-Mod.jpg"
+        alt=""
+      />
+       <Route path="/smurf-form"
         render={props => 
         <SmurfForm {...props} 
         addSmurf={this.addSmurf}/>} />
-        
+        <DeleteSmurf />
         <Route path="/" render={() => 
         <Smurfs smurfs={this.state.smurfs} />} />
+        
       </div>
     );
   }
